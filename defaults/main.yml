@@ -163,3 +163,9 @@ adguardhome_blocked_services_time_zone: 'UTC'
 # List of items to populate systemd's [Unit] After stanzas
 # Useful to managed depencies, for example on VPN daemons
 adguardhome_systemd_unit_after: []
+
+adguardhome_systemd_service_options: []
+# adguardhome_systemd_service_options:
+#   - name: CPUQuota
+#     value: 50%
+
