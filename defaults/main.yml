@@ -1,5 +1,5 @@
 ---
-adguardhome_version: 0.107.36
+adguardhome_version: 0.107.44
 adguardhome_user: adguardhome
 adguardhome_group: adguardhome
 adguardhome_daemon: adguardhome
@@ -49,8 +49,7 @@ adguardhome_bootstrap_dns:
   - '149.112.112.0'
   - '2620:fe::10'
   - '2620:fe::fe:10'
-adguardhome_all_servers: 'false'
-adguardhome_fastest_addr: 'false'
+adguardhome_upstream_mode: 'parallel'
 adguardhome_fastest_timeout: '1s'
 adguardhome_allowed_clients: []
 adguardhome_disallowed_clients: []
