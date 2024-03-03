@@ -21,7 +21,7 @@ ExecStart="{{ adguardhome_bin_file }}" --work-dir "{{ adguardhome_data_dir }}" -
 Restart=on-failure
 RestartSec=10
 
-{% for options in adguardhome_systemd_service_params %}
+{% for option in adguardhome_systemd_service_params %}
 {{ option.name }}={{ option.value }}
 {% endfor %}
 
