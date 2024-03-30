@@ -164,8 +164,7 @@ adguardhome_blocked_services_time_zone: 'UTC'
 # Useful to managed depencies, for example on VPN daemons
 adguardhome_systemd_unit_after: []
 
-adguardhome_systemd_service_options: []
-# adguardhome_systemd_service_options:
+adguardhome_systemd_service_params: []
+# adguardhome_systemd_service_params:
 #   - name: CPUQuota
 #     value: 50%
-
