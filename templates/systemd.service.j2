@@ -1,10 +1,10 @@
 # {{ ansible_managed }}
 [Unit]
 Description=AdGuard Home
-ConditionFileIsExecutable={{ adguardhome_bin_file }}
+ConditionFileIsExecutable={{ adguardhome_bin_file | quote }}
 After=syslog.target
 After=network-online.target
-{% if adguardhome_systemd_unit_after|length > 0 %}
+{% if adguardhome_systemd_unit_after | length > 0 %}
 {% for item in adguardhome_systemd_unit_after %}
 After={{ item }}
 {% endfor %}
@@ -16,11 +16,11 @@ User={{ adguardhome_user }}
 Group={{ adguardhome_group }}
 StartLimitInterval=5
 StartLimitBurst=10
-WorkingDirectory={{ adguardhome_data_dir }}
-ExecStart="{{ adguardhome_bin_file }}" --work-dir "{{ adguardhome_data_dir }}" --config "{{ adguardhome_config_file }}"
+WorkingDirectory={{ adguardhome_data_dir | quote }}
+ExecStart={{ adguardhome_bin_file | quote }} --work-dir {{ adguardhome_data_dir | quote }} --config {{ adguardhome_config_file | quote }}
 Restart=on-failure
 RestartSec=10
-
+ExecReload={{ adguardhome_bin_file | quote }} --service reload
 {% for option in adguardhome_systemd_service_params %}
 {{ option.name }}={{ option.value }}
 {% endfor %}

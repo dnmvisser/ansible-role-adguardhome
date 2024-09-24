@@ -7,3 +7,8 @@
   ansible.builtin.service:
     name: "{{ adguardhome_daemon }}"
     state: restarted
+
+- name: reload adguardhome # noqa name[casing]
+  ansible.builtin.service:
+    name: "{{ adguardhome_daemon }}"
+    state: reloaded
