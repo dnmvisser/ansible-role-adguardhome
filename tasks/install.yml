@@ -22,9 +22,52 @@
   ignore_errors: true
   changed_when: false
 
+# The unarchive module uses urllib3, and the way that is used in ansible,
+# prevents it from using SOCKS5 proxies. But we do need that, because
+# github.com does not support IPv6, and the SSH tunnel we use to work
+# around that, is SOCKS5. So, we manually download the archive with curl,
+# which is able to use a SOCKS5 proxy.
+- name: Fetch release information from API
+  ansible.builtin.command:
+    cmd: "curl {{ token }}--silent {{ adguardhome_releases }}"
+  register: releases_json
+  vars:
+    # https://github.com/settings/personal-access-tokens
+    token: |
+      {{ '--header "Authorization: Bearer ' ~ ghtok ~ '"' if ghtok is defined else '' }}
+  when: __adguardhome_version_result is failed
+        or __adguardhome_version_result.stdout is not search(adguardhome_version)
+
+- name: Set release variables
+  ansible.builtin.set_fact:
+    _version: "{{ (releases_json.stdout|from_json).tag_name  }}"
+    _download_url: "{{ ((releases_json.stdout|from_json).assets|selectattr('name','==','AdGuardHome_linux_'~_arch_map[ansible_architecture]~'.tar.gz'))[0].browser_download_url }}"
+  when: __adguardhome_version_result is failed
+        or __adguardhome_version_result.stdout is not search(adguardhome_version)
+
+- name: Set tarball path
+  ansible.builtin.set_fact:
+    _tarball: "/var/cache/curl/aghome-{{ _version }}.tar.gz"
+  when: __adguardhome_version_result is failed
+        or __adguardhome_version_result.stdout is not search(adguardhome_version)
+
+- name: Ensure archive has been downloaded from Github
+  ansible.builtin.command:
+    cmd: >-
+      curl
+      --location
+      --remove-on-error
+      --create-dirs
+      --output {{ _tarball }}
+      {{ _download_url }}
+    creates: "{{ _tarball }}"
+  changed_when: false
+  when: __adguardhome_version_result is failed
+        or __adguardhome_version_result.stdout is not search(adguardhome_version)
+
 - name: Install AdGuardHome.
   ansible.builtin.unarchive:
-    src: "https://github.com/AdguardTeam/AdGuardHome/releases/download/v{{ adguardhome_version }}/AdGuardHome_linux_{{ _arch_map[ansible_architecture] }}.tar.gz"  # yamllint disable-line rule:line-length
+    src: "{{ _tarball }}"
     dest: /usr/local/bin/
     remote_src: true
     include:

@@ -1,5 +1,8 @@
 ---
-adguardhome_version: 0.107.44
+adguardhome_version: v0.107.44
+
+# Github logic
+adguardhome_releases: "https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/{{ 'latest' if adguardhome_version == 'latest' else 'tags/' ~ adguardhome_version }}"
 adguardhome_user: adguardhome
 adguardhome_group: adguardhome
 adguardhome_daemon: adguardhome
