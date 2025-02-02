@@ -29,7 +29,7 @@
 # which is able to use a SOCKS5 proxy.
 - name: Fetch release information from API
   ansible.builtin.command:
-    cmd: "curl {{ token }}--silent {{ adguardhome_releases }}"
+    cmd: "curl {{ token }} --fail --silent {{ adguardhome_releases }}"
   register: releases_json
   vars:
     # https://github.com/settings/personal-access-tokens
