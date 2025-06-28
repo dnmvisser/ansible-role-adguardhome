@@ -37,6 +37,7 @@
       {{ '--header "Authorization: Bearer ' ~ ghtok ~ '"' if ghtok is defined else '' }}
   when: __adguardhome_version_result is failed
         or __adguardhome_version_result.stdout is not search(adguardhome_version)
+  check_mode: false
 
 - name: Set release variables
   ansible.builtin.set_fact:
@@ -44,6 +45,7 @@
     _download_url: "{{ ((releases_json.stdout|from_json).assets|selectattr('name','==','AdGuardHome_linux_'~_arch_map[ansible_architecture]~'.tar.gz'))[0].browser_download_url }}"
   when: __adguardhome_version_result is failed
         or __adguardhome_version_result.stdout is not search(adguardhome_version)
+  check_mode: false
 
 - name: Set tarball path
   ansible.builtin.set_fact:
