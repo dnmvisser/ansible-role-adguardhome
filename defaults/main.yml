@@ -66,8 +66,8 @@ adguardhome_trusted_proxies:
   - 127.0.0.1/8
   - '::1/128'
 adguardhome_cache_size: 4194304
-adguardhome_cache_ttl_min: 0
-adguardhome_cache_ttl_max: 0
+adguardhome_cache_ttl_min: '0'
+adguardhome_cache_ttl_max: '0'
 adguardhome_cache_optimistic: 'false'
 adguardhome_bogus_nxdomain: []
 adguardhome_aaaa_disabled: 'false'
@@ -104,7 +104,7 @@ adguardhome_tls_force_https: 'false'
 adguardhome_tls_port_https: 443
 adguardhome_tls_port_dns_over_tls: 853
 adguardhome_tls_port_dns_over_quic: 853
-adguardhome_tls_port_dnscrypt: 0
+adguardhome_tls_port_dnscrypt: '0'
 adguardhome_tls_dnscrypt_config_file: '""'
 adguardhome_tls_allow_enencrypted_doh: 'false'
 adguardhome_tls_sctrict_sni_check: 'false'
@@ -142,14 +142,14 @@ adguardhome_runtime_sources_dhcp: 'true'
 adguardhome_runtime_sources_hosts: 'true'
 adguardhome_log_compress: 'false'
 adguardhome_log_localtime: 'false'
-adguardhome_log_max_backups: 0
+adguardhome_log_max_backups: '0'
 adguardhome_log_max_size: 100
 adguardhome_log_max_age: 3
 adguardhome_log_file: '""'
 adguardhome_verbose: 'false'
 adguardhome_os_group: '""'
 adguardhome_os_user: '""'
-adguardhome_rlimit_nofile: 0
+adguardhome_rlimit_nofile: '0'
 adguardhome_private_networks: []  # Added in 0.107.7
 adguardhome_handle_ddr: 'true'  # Added in 0.107.10
 adguardhome_ipset_file: '""'  # Added in 0.107.13
