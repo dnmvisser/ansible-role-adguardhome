@@ -42,7 +42,7 @@
 - name: Set release variables
   ansible.builtin.set_fact:
     _version: "{{ (releases_json.stdout|from_json).tag_name  }}"
-    _download_url: "{{ ((releases_json.stdout|from_json).assets|selectattr('name','==','AdGuardHome_linux_'~_arch_map[ansible_architecture]~'.tar.gz'))[0].browser_download_url }}"
+    _download_url: "{{ ((releases_json.stdout|from_json).assets|selectattr('name','==','AdGuardHome_linux_'~_arch_map[ansible_facts['architecture']]~'.tar.gz'))[0].browser_download_url }}"
   when: __adguardhome_version_result is failed
         or __adguardhome_version_result.stdout is not search(adguardhome_version)
   check_mode: false
@@ -109,4 +109,4 @@
 - name: Ensure service is enabled
   ansible.builtin.service:
     name: "{{ adguardhome_daemon }}"
-    enabled: yes
+    enabled: true
